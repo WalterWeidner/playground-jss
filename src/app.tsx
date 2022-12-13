@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { JssProvider, ThemeProvider } from "react-jss";
+import React, { useState } from "react";
 import { Child } from "./child";
 import { Parent } from "./parent";
 
@@ -23,15 +22,29 @@ export default function App() {
     <div>
       <div>
         <strong>Steps to reproduce</strong>
+        <p>
+          This is a slightly contrived example. Technically, in this case we
+          don't need to use dynamic classes. In my real use-case where this bug
+          exists we do need to use dynamic classes.
+        </p>
         <ol style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <li>
+            First you need to &nbsp;
             <button onClick={() => setCount((state) => state + 1)}>
-              Re-render App
+              re-render
             </button>
+            &nbsp; the root node.
           </li>
           <li>
-            <button onClick={() => setParent(2)}>Change Parent</button>
+            Next, &nbsp;
+            <button
+              onClick={() => setParent((_parent) => (_parent === 1 ? 2 : 1))}
+            >
+              remount
+            </button>
+            &nbsp; the parent component.
           </li>
+          <li>Observe the border is missing from the component.</li>
         </ol>
       </div>
 
